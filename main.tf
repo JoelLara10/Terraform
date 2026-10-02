@@ -9,6 +9,10 @@ terraform {
 }
 
 resource "random_string" "suffix" {
-    length = 16
+    length = var.length
     special = true
+}
+
+locals {
+    unique_name = "${var.aplication_name}-${var.enviroment}-${random_string.suffix.result}"
 }

@@ -15,4 +15,5 @@ resource "random_string" "suffix" {
 
 locals {
     unique_name = "${var.aplication_name}-${var.enviroment}-${random_string.suffix.result}"
+    aplication_name = var.aplication_name
 }

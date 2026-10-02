@@ -24,12 +24,19 @@ variable "location" {
 
 variable "vnet_address_space" {
     description = "Address space de la vnet"
-    type = string
-    default = "10.0.0.0/16"
+    type = list(string)
+    default = ["10.0.0.0/16"]
 }
 
 variable "tags" {
     description = "Tags para los recursos"
     type = map(string)
     default = "terraform"
+}
+
+variable "subscription_id" {
+    description = "The azure subscription id"
+    type = string
+    default = "e76fcc4c-b777-4d93-b28b-ac86c3a2f4e7"
+    sensitive = true
 }

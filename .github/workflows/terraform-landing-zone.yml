@@ -1,0 +1,27 @@
+name: Validar laboratorio Landing Zone
+on:
+  push:
+    paths:
+      - 'laboratorios/landing-zone/**'
+      - '.github/workflows/terraform-landing-zone.yml'
+  pull_request:
+    paths:
+      - 'laboratorios/landing-zone/**'
+      - '.github/workflows/terraform-landing-zone.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: laboratorios/landing-zone
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.13.4
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false -input=false
+      - run: terraform validate -no-color
+      - run: python3 -m py_compile scripts/worker_probe.py

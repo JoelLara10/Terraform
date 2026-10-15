@@ -140,3 +140,25 @@ terraform apply destroy.tfplan
 ```
 
 Revisa antes el plan: elimina base, datos Blob y VM del laboratorio. Respaldar antes si guardaste información. Conserva el estado hasta confirmar eliminación. Nunca usar datos clínicos reales en esta práctica.
+
+
+## Recuperacion de un apply parcial
+
+No borrar terraform.tfstate ni cambiar location globalmente. Descargar las correcciones de security.tf, versions.tf, variables.tf y services.tf desde la misma rama y conservar terraform.tfvars.
+
+- NSG: un puerto unico o * usa destination_port_range; solo una lista de puertos usa destination_port_ranges.
+- Storage: features.storage.data_plane_available=false evita comprobaciones de datos desde la laptop contra una cuenta privada. storage_use_azuread=true evita Shared Key en operaciones compatibles. La cuenta mantiene claves compartidas y red publica desactivadas.
+- PostgreSQL Version should be in []: consultar capacidades, registro del proveedor y restricciones de la suscripcion antes de cambiar version o SKU. No asumir que cambiar 16 por 15 resuelve una lista vacia.
+
+```powershell
+az provider show --namespace Microsoft.DBforPostgreSQL --query registrationState -o tsv
+az postgres flexible-server list-skus --location eastus --output table
+terraform state list
+terraform fmt
+terraform validate
+terraform plan "-out=lab.tfplan"
+```
+
+Si la region no permite el servicio, postgres_location permite elegir SOLO la region de PostgreSQL; revisar antes conectividad Private Link entre regiones, politicas y costo. postgres_version permite ajustar la version cuando las capacidades la admitan. No cambiar location de los recursos ya desplegados para probar suerte.
+
+Un fallo puede dejar recursos existentes fuera del estado. Si el nuevo plan informa que la cuenta ya existe, primero comprobar su estado en Azure y que no figura en terraform state list; solo entonces importar azurerm_storage_account.blob con su resource ID. Si aparece en estado como tainted, revisar el plan de reemplazo y el contenido antes de decidir; no ejecutar untaint a ciegas. Aplicar solo el plan nuevo revisado, no reutilizar el archivo anterior al cambio de codigo.

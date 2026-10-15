@@ -58,3 +58,18 @@ variable "enable_vm_outbound" {
   type        = bool
   default     = true
 }
+
+variable "postgres_location" {
+  description = "Region opcional solo para PostgreSQL si la suscripcion no admite el servicio en location. Revisar Private Link interregional y costo antes de usar. No mueve los demas recursos."
+  type        = string
+  default     = null
+}
+variable "postgres_version" {
+  description = "Version de PostgreSQL compatible con la region y suscripcion."
+  type        = string
+  default     = "16"
+  validation {
+    condition     = contains(["14", "15", "16", "17"], var.postgres_version)
+    error_message = "Usa una version admitida por AzureRM 4.81 y verifica su disponibilidad regional."
+  }
+}

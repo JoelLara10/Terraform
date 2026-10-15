@@ -57,7 +57,8 @@ resource "azurerm_network_security_group" "lab" {
       protocol                   = security_rule.value[2]
       source_address_prefix      = security_rule.value[3]
       destination_address_prefix = security_rule.value[4]
-      destination_port_ranges    = split(",", security_rule.value[5])
+      destination_port_range     = strcontains(security_rule.value[5], ",") ? null : security_rule.value[5]
+      destination_port_ranges    = strcontains(security_rule.value[5], ",") ? split(",", security_rule.value[5]) : null
       source_port_range          = "*"
       access                     = startswith(security_rule.key, "deny") ? "Deny" : "Allow"
     }

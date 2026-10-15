@@ -6,9 +6,15 @@ terraform {
   }
 }
 provider "azurerm" {
-  features {}
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+  features {
+    storage {
+      # La cuenta es privada y no usa queue_properties ni static_website.
+      data_plane_available = false
+    }
+  }
+  storage_use_azuread = true
+  subscription_id     = var.subscription_id
+  tenant_id           = var.tenant_id
   # Solo los proveedores usados; el usuario puede registrarlos antes con Azure CLI.
   resource_provider_registrations = "none"
 }

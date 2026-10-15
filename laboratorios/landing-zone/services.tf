@@ -41,9 +41,9 @@ resource "azurerm_linux_web_app" "app" {
 }
 resource "azurerm_postgresql_flexible_server" "db" {
   name                          = "pg-${local.suffix}"
-  location                      = azurerm_resource_group.lab.location
+  location                      = coalesce(var.postgres_location, var.location)
   resource_group_name           = azurerm_resource_group.lab.name
-  version                       = "16"
+  version                       = var.postgres_version
   sku_name                      = var.postgres_sku
   storage_mb                    = 32768
   backup_retention_days         = 7

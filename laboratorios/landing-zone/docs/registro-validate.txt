@@ -1,0 +1,41 @@
+
+Error: Failed to load plugin schemas
+
+Error while loading schemas for plugin components: 2 problems:
+
+- Failed to obtain provider schema: Could not load the schema for provider
+registry.terraform.io/hashicorp/azurerm: failed to instantiate provider
+"registry.terraform.io/hashicorp/azurerm" to obtain schema: Unrecognized
+remote plugin message: 
+Failed to read any lines from plugin's stdout
+This usually means
+  the plugin was not compiled for this architecture,
+  the plugin is missing dynamic-link libraries necessary to run,
+  the plugin is not executable by this process due to file permissions, or
+  the plugin failed to negotiate the initial go-plugin protocol handshake
+
+Additional notes about plugin:
+  Path: .terraform/providers/registry.terraform.io/hashicorp/azurerm/4.81.0/linux_amd64/terraform-provider-azurerm_v4.81.0_x5
+  Mode: -rwxr-xr-x
+  Owner: 0 [root] (current: 0 [root])
+  Group: 0 [root] (current: 0 [root])
+  ELF architecture: EM_X86_64 (current architecture: amd64)
+.
+- Failed to obtain provider schema: Could not load the schema for provider
+registry.terraform.io/hashicorp/random: failed to instantiate provider
+"registry.terraform.io/hashicorp/random" to obtain schema: Unrecognized
+remote plugin message: 
+Failed to read any lines from plugin's stdout
+This usually means
+  the plugin was not compiled for this architecture,
+  the plugin is missing dynamic-link libraries necessary to run,
+  the plugin is not executable by this process due to file permissions, or
+  the plugin failed to negotiate the initial go-plugin protocol handshake
+
+Additional notes about plugin:
+  Path: .terraform/providers/registry.terraform.io/hashicorp/random/3.7.2/linux_amd64/terraform-provider-random_v3.7.2_x5
+  Mode: -rwxr-xr-x
+  Owner: 0 [root] (current: 0 [root])
+  Group: 0 [root] (current: 0 [root])
+  ELF architecture: EM_X86_64 (current architecture: amd64)
+..

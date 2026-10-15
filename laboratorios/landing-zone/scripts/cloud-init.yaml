@@ -1,0 +1,9 @@
+#cloud-config
+package_update: true
+packages:
+  - postgresql-client
+  - dnsutils
+  - curl
+  - ca-certificates
+  - python3
+# No instala ni ejecuta un worker del proyecto: solo herramientas del laboratorio.

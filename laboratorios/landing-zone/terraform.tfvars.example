@@ -1,0 +1,13 @@
+subscription_id       = "REEMPLAZAR-ID-SUSCRIPCION"
+tenant_id             = "REEMPLAZAR-ID-TENANT"
+entra_admin_object_id = "REEMPLAZAR-OBJECT-ID-USUARIO"
+entra_admin_login     = "tu-cuenta@tu-tenant.edu.mx"
+ssh_public_key_path   = "~/.ssh/ineo_lab.pub"
+location              = "eastus"
+project               = "ineolz"
+environment           = "lab"
+owner                 = "Joel Lara"
+vm_size               = "Standard_B2ats_v2"
+postgres_sku          = "B_Standard_B1ms"
+app_service_sku       = "B1"
+enable_vm_outbound    = true

@@ -1,10 +1,11 @@
 locals {
   # direction, priority, protocol, source, destination, destination ports
+  # Azure DNS de plataforma se permite por defecto. AzurePlatformDNS solo se usa
+  # para denegarlo; no crear reglas Allow dirigidas a esa etiqueta.
   security_rules = {
     app = {
       pg           = ["Outbound", 100, "Tcp", "10.0.1.0/24", "10.0.2.4", "5432"]
       blob         = ["Outbound", 110, "Tcp", "10.0.1.0/24", "10.0.4.4", "443"]
-      dns          = ["Outbound", 120, "*", "*", "AzurePlatformDNS", "53"]
       deny_lateral = ["Outbound", 4000, "*", "*", "VirtualNetwork", "*"]
       deny_in      = ["Inbound", 4096, "*", "*", "*", "*"]
     }
@@ -22,7 +23,6 @@ locals {
       ssh  = ["Inbound", 100, "Tcp", "10.0.5.0/26", "10.0.3.0/24", "22"]
       pg   = ["Outbound", 100, "Tcp", "10.0.3.0/24", "10.0.2.4", "5432"]
       blob = ["Outbound", 110, "Tcp", "10.0.3.0/24", "10.0.4.4", "443"]
-      dns  = ["Outbound", 120, "*", "*", "AzurePlatformDNS", "53"]
       # APT y HTTPS de identidad/repositorios; NAT es salida, no acceso de entrada.
       web          = ["Outbound", 130, "Tcp", "10.0.3.0/24", "Internet", "80,443"]
       deny_lateral = ["Outbound", 4000, "*", "*", "VirtualNetwork", "*"]
